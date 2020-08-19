@@ -1,13 +1,15 @@
 package snakepackage;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
+
+import java.awt.*;
 
 import javax.swing.JFrame;
 
 import enums.GridSize;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -17,7 +19,7 @@ import javax.swing.JPanel;
  * @author jd-
  *
  */
-public class SnakeApp {
+public class SnakeApp  {
 
     private static SnakeApp app;
     public static final int MAX_THREADS = 8;
@@ -37,6 +39,7 @@ public class SnakeApp {
     private static Board board;
     int nr_selected = 0;
     Thread[] thread = new Thread[MAX_THREADS];
+    private  static JButton start, resume, stop;
 
     public SnakeApp() {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -55,10 +58,53 @@ public class SnakeApp {
         
         JPanel actionsBPabel=new JPanel();
         actionsBPabel.setLayout(new FlowLayout());
-        actionsBPabel.add(new JButton("Action "));
+
+        start = new JButton("Start");
+        stop = new JButton("Pause");
+        resume = new JButton("Resume");
+        actionsBPabel.add(start);
+        actionsBPabel.add(resume);
+        actionsBPabel.add(stop);
         frame.add(actionsBPabel,BorderLayout.SOUTH);
 
+        prepareAcciones();
+
     }
+
+    private void prepareAcciones() {
+
+        start.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                for (Thread i : thread){
+                    i.start();
+                }
+                start.setEnabled(false);
+                stop.setEnabled(true);
+                resume.setEnabled(false);
+            }
+        });
+        stop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                for (Thread i : thread){
+                    i.suspend();
+                }
+                stop.setEnabled(false);
+                resume.setEnabled(true);
+
+            }
+        });
+        resume.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                for (Thread i : thread){
+                    i.resume();
+                }
+                resume.setEnabled(false);
+                stop.setEnabled(true);
+            }
+        });
+
+    }
+
 
     public static void main(String[] args) {
         app = new SnakeApp();
@@ -74,12 +120,12 @@ public class SnakeApp {
             snakes[i] = new Snake(i + 1, spawn[i], i + 1);
             snakes[i].addObserver(board);
             thread[i] = new Thread(snakes[i]);
-            thread[i].start();
+
         }
 
         frame.setVisible(true);
 
-            
+
         while (true) {
             int x = 0;
             for (int i = 0; i != MAX_THREADS; i++) {
@@ -97,7 +143,7 @@ public class SnakeApp {
         for (int i = 0; i != MAX_THREADS; i++) {
             System.out.println("["+i+"] :"+thread[i].getState());
         }
-        
+
 
     }
 

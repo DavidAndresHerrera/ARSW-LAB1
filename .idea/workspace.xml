@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="df0b9062-9772-4f10-a59a-37e987836db8" name="Default Changelist" comment="" />
+=======
+    <list default="true" id="99809ea2-d27f-4d4a-93f3-10ba99e9f513" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/SNAKE_RACE/src/main/java/snakepackage/SnakeApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/SNAKE_RACE/src/main/java/snakepackage/SnakeApp.java" afterDir="false" />
+    </list>
+>>>>>>> b19f1010f09dbf0d2486cdac90680c9008ce422c
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,7 +23,11 @@
       </MavenGeneralSettings>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="ProjectId" id="1gIdAc9pNtPp4re9XSStFbF9vhJ" />
+=======
+  <component name="ProjectId" id="1gIet6BDH1CswFZenSqeYb9AJIx" />
+>>>>>>> b19f1010f09dbf0d2486cdac90680c9008ce422c
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -28,6 +38,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
+<<<<<<< HEAD
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -37,6 +48,30 @@
       <option name="presentableId" value="Default" />
       <updated>1597805899231</updated>
       <workItem from="1597805902379" duration="1282000" />
+=======
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="99809ea2-d27f-4d4a-93f3-10ba99e9f513" name="Default Changelist" comment="" />
+      <created>1597806745760</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1597806745760</updated>
+      <workItem from="1597806747235" duration="4017000" />
+>>>>>>> b19f1010f09dbf0d2486cdac90680c9008ce422c
     </task>
     <servers />
   </component>
