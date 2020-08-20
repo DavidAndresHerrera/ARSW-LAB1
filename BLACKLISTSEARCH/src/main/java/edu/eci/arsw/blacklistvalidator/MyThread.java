@@ -29,9 +29,6 @@ public class MyThread extends  Thread{
     public void run(){
 
         validar();
-        //System.out.println("trhed"+inicio+" "+fin);
-
-
     }
 
     private void validar(){
