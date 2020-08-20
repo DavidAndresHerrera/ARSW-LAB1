@@ -98,9 +98,6 @@ public class SnakeApp  {
                 int peor=0;
                 for (Snake i : snakes){
                     if (i.getBody().size() > max){max = i.getBody().size();}
-                    if(i.getPeor()!=-1){
-                        peor=i.getIdt();
-                    }
                 }
                 for (Thread i: thread){
                     i.suspend();

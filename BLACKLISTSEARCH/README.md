@@ -60,7 +60,9 @@ hilos es el mismo desempeño que con 100 hilos.
 ![](img/visualVM100.png)
 
 
+A medida que nos vamos acerdando al total de hilos qeu el procesador permite la curva se nivela, ya que no se puede optimizar mas el proceso.
 
+![](img/Ahmdal.png)
 
 
 

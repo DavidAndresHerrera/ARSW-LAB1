@@ -1,0 +1,9 @@
+- Posibles condiciones de carreras 
+	Una de las posibles condiciones de carrera es que dos snakes traten de usar una misma posicion del tablero(Board)
+	ya que el recurso es compartido 
+- posibles colecciones inapropiadas
+	En la clase board la listas de celdas deberian ser concurrentes para poder tener acceso a estas y poder 
+	sincronizar de una mejor forma el acceso a esta.
+-Uso inicesario de esperas activas
+	Cuando la ultima snake se muere el juego sigue en ejecucion porque nada le informa al juego que ya no hay snakes
+ 
