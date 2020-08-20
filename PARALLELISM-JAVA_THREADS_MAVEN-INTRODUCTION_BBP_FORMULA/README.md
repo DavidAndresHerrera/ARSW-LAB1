@@ -6,9 +6,9 @@ utilizando el paralelismo y el multithreading:
 
 Este nuevo metodo se encarga de realizar las divisiones de procesos que va a realizar cada hilo.
 
-![](img/Metodo1.png)
+![](img/metodo1.png)
 
-![](img/Metodo2.png)
+![](img/metodo2.png)
 
 Teniendo en cuenta que cada hilo usa el metodo de PiDigits que venia en la plantilla de la siguiente manera:
 
