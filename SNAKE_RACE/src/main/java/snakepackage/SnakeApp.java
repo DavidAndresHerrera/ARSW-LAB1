@@ -3,6 +3,7 @@ package snakepackage;
 
 import java.awt.*;
 
+import javax.sound.midi.Soundbank;
 import javax.swing.JFrame;
 
 import enums.GridSize;
@@ -10,10 +11,13 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLOutput;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.plaf.TableHeaderUI;
 
 /**
  * @author jd-
@@ -24,6 +28,7 @@ public class SnakeApp  {
     private static SnakeApp app;
     public static final int MAX_THREADS = 8;
     Snake[] snakes = new Snake[MAX_THREADS];
+    ArrayList<Snake> snakeD;
     private static final Cell[] spawn = {
         new Cell(1, (GridSize.GRID_HEIGHT / 2) / 2),
         new Cell(GridSize.GRID_WIDTH - 2,
@@ -37,6 +42,7 @@ public class SnakeApp  {
         GridSize.GRID_HEIGHT - 2)};
     private JFrame frame;
     private static Board board;
+    private Verificar verificador;
     int nr_selected = 0;
     Thread[] thread = new Thread[MAX_THREADS];
     private  static JButton start, resume, stop;
@@ -53,7 +59,7 @@ public class SnakeApp  {
                 dimension.height / 2 - frame.getHeight() / 2);
         board = new Board();
         
-        
+        verificador = new Verificar();
         frame.add(board,BorderLayout.CENTER);
         
         JPanel actionsBPabel=new JPanel();
@@ -67,6 +73,7 @@ public class SnakeApp  {
         actionsBPabel.add(stop);
         frame.add(actionsBPabel,BorderLayout.SOUTH);
 
+        snakeD = new ArrayList<Snake>();
         prepareAcciones();
 
     }
@@ -78,6 +85,8 @@ public class SnakeApp  {
                 for (Thread i : thread){
                     i.start();
                 }
+
+
                 start.setEnabled(false);
                 stop.setEnabled(true);
                 resume.setEnabled(false);
@@ -85,9 +94,27 @@ public class SnakeApp  {
         });
         stop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                for (Thread i : thread){
+                int max = -100;
+                int peor=0;
+                for (Snake i : snakes){
+                    if (i.getBody().size() > max){max = i.getBody().size();}
+                    if(i.getPeor()!=-1){
+                        peor=i.getIdt();
+                    }
+                }
+                for (Thread i: thread){
                     i.suspend();
                 }
+                peor = verificador.getprimeraMuerta();
+                if (peor == -1) {
+                    System.out.println("No hay muertas");
+                }
+                else{
+                    System.out.println("La primera en morir fue: "+ peor);
+                }
+                //System.out.println(snakeD.get(0).getIdt());
+                System.out.println("la longitud maxima hasta el momento es: "+max);
+
                 stop.setEnabled(false);
                 resume.setEnabled(true);
 
@@ -95,7 +122,7 @@ public class SnakeApp  {
         });
         resume.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                for (Thread i : thread){
+                for (Thread i: thread){
                     i.resume();
                 }
                 resume.setEnabled(false);
@@ -117,7 +144,7 @@ public class SnakeApp  {
         
         for (int i = 0; i != MAX_THREADS; i++) {
             
-            snakes[i] = new Snake(i + 1, spawn[i], i + 1);
+            snakes[i] = new Snake(i + 1, spawn[i], i + 1, verificador);
             snakes[i].addObserver(board);
             thread[i] = new Thread(snakes[i]);
 

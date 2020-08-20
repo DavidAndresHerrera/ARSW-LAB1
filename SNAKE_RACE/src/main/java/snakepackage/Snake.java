@@ -9,13 +9,16 @@ import enums.GridSize;
 
 public class Snake extends Observable implements Runnable {
 
+
+
+    private int peor;
     private int idt;
     private Cell head;
     private Cell newCell;
     private LinkedList<Cell> snakeBody = new LinkedList<Cell>();
     //private Cell objective = null;
     private Cell start = null;
-
+    private boolean bandera;
     private boolean snakeEnd = false;
 
     private int direction = Direction.NO_DIRECTION;
@@ -26,11 +29,14 @@ public class Snake extends Observable implements Runnable {
     private boolean isSelected = false;
     private int growing = 0;
     public boolean goal = false;
+    private Verificar verificador;
 
-    public Snake(int idt, Cell head, int direction) {
+    public Snake(int idt, Cell head, int direction, Verificar verificador) {
         this.idt = idt;
         this.direction = direction;
         generateSnake(head);
+        bandera = false;
+        this.verificador = verificador;
 
     }
 
@@ -46,46 +52,70 @@ public class Snake extends Observable implements Runnable {
     }
 
     @Override
-    public void run() {
+    public  void run() {
         while (!snakeEnd) {
-            
-            snakeCalc();
+            synchronized (this) {
 
-            //NOTIFY CHANGES TO GUI
-            setChanged();
-            notifyObservers();
-
-            try {
-                if (hasTurbo == true) {
-                    Thread.sleep(500 / 3);
-                } else {
-                    Thread.sleep(500);
+                while  (bandera){
+                    try {
+                        wait();
+                    }catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+                snakeCalc();
+
+                //NOTIFY CHANGES TO GUI
+                setChanged();
+                notifyObservers();
+
+                try {
+                    if (hasTurbo == true) {
+                        Thread.sleep(500 / 3);
+                    } else {
+                        Thread.sleep(500);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                notifyAll();
             }
 
         }
-        
+
+
         fixDirection(head);
         
         
     }
+    private  void parar() throws InterruptedException {
+        synchronized (this){
+            wait();
+        }
+    }
 
-    private void snakeCalc() {
+    public int getPeor() {
+        return peor;
+    }
+
+
+    private synchronized void  snakeCalc() {
+
         head = snakeBody.peekFirst();
 
         newCell = head;
 
         newCell = changeDirection(newCell);
-        
+
         randomMovement(newCell);
 
         checkIfFood(newCell);
         checkIfJumpPad(newCell);
         checkIfTurboBoost(newCell);
         checkIfBarrier(newCell);
-        
+
         snakeBody.push(newCell);
 
         if (growing <= 0) {
@@ -96,6 +126,10 @@ public class Snake extends Observable implements Runnable {
             growing--;
         }
 
+
+
+
+
     }
 
     private void checkIfBarrier(Cell newCell) {
@@ -104,10 +138,13 @@ public class Snake extends Observable implements Runnable {
             System.out.println("[" + idt + "] " + "CRASHED AGAINST BARRIER "
                     + newCell.toString());
             snakeEnd=true;
+            verificador.setMuertas(this.getIdt());
+
+
         }
     }
 
-    
+
     private Cell fixDirection(Cell newCell) {
 
         // revert movement
@@ -343,4 +380,12 @@ public class Snake extends Observable implements Runnable {
         return idt;
     }
 
+    public synchronized void detener(){
+        bandera = true;
+        notifyAll();
+    }
+    public synchronized void seguir(){
+        bandera = false;
+        notifyAll();
+    }
 }
