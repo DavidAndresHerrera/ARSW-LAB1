@@ -10,9 +10,9 @@ Sincronizamos dentro del metodo run, creando una bandera, para notificar a los o
 Indentificamos estas regiones criticas ya que estos son los metodos que 
 acceden al unico recurso compartido que es el tablero
 
-![ImagenSincronizacion](img/Region1.jpg)
+![ImagenSincronizacion](img/Region1.png)
 
-![ImagenSincronizacion](img/Region2.jpg)
+![ImagenSincronizacion](img/Region2.png)
 
 3. As you can see, the game is incomplete. Write code in order to implement functionallities through buttons in the GUI to start / Pause / Resume the game: start the game if it has not started, Pause the game if it is on, Resume the game if it is suspended. Keep in mind:
 
